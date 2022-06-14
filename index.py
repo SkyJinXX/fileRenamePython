@@ -1,7 +1,10 @@
 import xlrd
 import os
-#path = './files/'
-path = 'F:/WechatFiles/WeChat Files/wxid_7uwuevbvm3iv21/FileStorage/MsgAttach/22c54f9f4f35259c421aa6a3156520d9/File/2022-06/合格/'
+import re
+#file_path = './files/'
+file_path = 'F:/WechatFiles/WeChat Files/wxid_7uwuevbvm3iv21/FileStorage/MsgAttach/22c54f9f4f35259c421aa6a3156520d9/File/2022-06/合格/'
+excel_path = input('excel:')
+file_path = input('文件夹：') + '\\'
 
 def getNameList():
     xlsx = xlrd.open_workbook('./电子合格.xls')
@@ -24,18 +27,19 @@ def getNameList():
     return name_list
 
 # 获取 文件列表 和 待命名名称列表
-file_list = os.listdir(path)
-file_list.sort(key=lambda x:int(x.split('.')[0])) #对‘.’进行切片，并取列表的第一个值（左边的文件名）转化整数型。(其实可以用正则，匹配出文件名中的数字部分，然后转为整数型，然后排序就对了)
+file_list = os.listdir(file_path)
+print(file_list)
+file_list.sort(key=lambda x:int(re.search(r'(\d+$)', x.split('.')[0]).group(1))) #对‘.’进行切片，并取列表的第一个值（左边的文件名）转化整数型。(其实可以用正则，匹配出文件名中的数字部分，然后转为整数型，然后排序就对了)
 name_list = getNameList()
 print("待处理的文件：", file_list)
 
 for i in range(len(file_list)):
 
     # 设置旧文件名（就是路径+文件名）
-    oldname = path+file_list[i]
+    oldname = file_path+file_list[i]
 
     # 设置新文件名
-    newname = path+name_list[i]+'.pdf'
+    newname = file_path+name_list[i]+'.pdf'
 
     # 用os模块中的rename方法对文件改名
     os.rename(oldname, newname)
