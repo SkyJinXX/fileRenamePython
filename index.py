@@ -1,8 +1,9 @@
 import xlrd
 import os
 import re
-excel_path = input('excel:')
-file_path = input('文件夹：') + '\\'
+print('请拖入或输入后按回车')
+excel_path = input('包含新文件名的excel文件路径:').strip('"')
+file_path = input('待处理文件所在的文件夹路径（只包含要处理的文件）：').strip('"') + '\\'
 
 
 def getNameList():
@@ -47,6 +48,4 @@ for i in range(len(file_list)):
     os.rename(oldname, newname)
     # print(oldname,'======>',newname)
 
-input('回车关闭')
-#input('回车关闭；')
-#os.system('pause')
+input('再按回车关闭')
